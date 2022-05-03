@@ -97,7 +97,7 @@ def horloge(heure, minutes):
 
     x = 0
     for i in range(1, 4):
-        for j in range(0, 4):
+        for j in range(0, 5):
             pixel = CHIFFRE[heure2][x][y]
             if pixel:
                 TABLEAU_HORLOGE[i][j] = COLOR_1
@@ -107,7 +107,7 @@ def horloge(heure, minutes):
 
     x = 0
     for i in range(5, 8):
-        for j in range(0, 4):
+        for j in range(0, 5):
             pixel = CHIFFRE[heure1][x][y]
             if pixel:
                 TABLEAU_HORLOGE[i][j] = COLOR_1
@@ -179,7 +179,6 @@ if(__name__ == '__main__'):
                 changeMinute = minutesNow
                 
                 horloge(heure, minutes)
-                print(TABLEAU_HORLOGE)
                 tableauVersLEDS()
 
             time.sleep(1)
