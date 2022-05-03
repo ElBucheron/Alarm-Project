@@ -24,18 +24,20 @@ ORDER = neopixel.GRB
 pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.1, auto_write=False,
                            pixel_order=ORDER)
 
-default = ["#000000", "#FA7921"]
+pixel_off = "#000000"
+COLOR_1 = "#FDE74C"
+COLOR_2 = "#5BC0EB"
 
-ZERO = [[default[1],default[1],default[1],default[1],default[1]],[default[1],default[0],default[0],default[0],default[1]],[default[1],default[1],default[1],default[1],default[1]]]
-UN = [[default[0],default[0],default[0],default[0],default[1]],[default[1],default[1],default[1],default[1],default[1]],[default[0],default[1],default[0],default[0],default[1]]]
-DEUX = [[default[1],default[1],default[1],default[0],default[1]],[default[1],default[0],default[1],default[0],default[1]],[default[1],default[0],default[1],default[1],default[1]]]
-TROIS = [[default[1],default[1],default[1],default[1],default[1]],[default[1],default[0],default[1],default[0],default[1]],[default[1],default[0],default[0],default[0],default[1]]]
-QUATRE = [[default[0],default[1],default[1],default[1],default[1]],[default[0],default[0],default[1],default[0],default[0]],[default[1],default[1],default[1],default[0],default[0]]]
-CINQ = [[default[1],default[0],default[1],default[1],default[1]],[default[1],default[0],default[1],default[0],default[1]],[default[1],default[1],default[1],default[0],default[1]]]
-SIX = [[default[1],default[0],default[1],default[1],default[1]],[default[1],default[0],default[1],default[0],default[1]],[default[1],default[1],default[1],default[1],default[1]]]
-SEPT = [[default[1],default[1],default[1],default[1],default[1]],[default[1],default[0],default[0],default[0],default[0]],[default[1],default[0],default[0],default[0],default[0]]]
-HUIT = [[default[1],default[1],default[1],default[1],default[1]],[default[1],default[0],default[1],default[0],default[1]],[default[1],default[1],default[1],default[1],default[1]]]
-NEUF = [[default[1],default[1],default[1],default[1],default[1]],[default[1],default[0],default[1],default[0],default[1]],[default[1],default[1],default[1],default[0],default[1]]]
+ZERO = [[1,1,1,1,1],[1,0,0,0,1],[1,1,1,1,1]]
+UN = [[0,0,0,0,1],[1,1,1,1,1],[0,1,0,0,1]]
+DEUX = [[1,1,1,0,1],[1,0,1,0,1],[1,0,1,1,1]]
+TROIS = [[1,1,1,1,1],[1,0,1,0,1],[1,0,0,0,1]]
+QUATRE = [[0,1,1,1,1],[0,0,1,0,0],[1,1,1,0,0]]
+CINQ = [[1,0,1,1,1],[1,0,1,0,1],[1,1,1,0,1]]
+SIX = [[1,0,1,1,1],[1,0,1,0,1],[1,1,1,1,1]]
+SEPT = [[1,1,1,1,1],[1,0,0,0,0],[1,0,0,0,0]]
+HUIT = [[1,1,1,1,1],[1,0,1,0,1],[1,1,1,1,1]]
+NEUF = [[1,1,1,1,1],[1,0,1,0,1],[1,1,1,0,1]]
 CHIFFRE = [ZERO,UN,DEUX,TROIS,QUATRE,CINQ,SIX,SEPT,HUIT,NEUF]
 
 TABLEAU_HORLOGE = []
@@ -54,7 +56,6 @@ def hex_to_rgb(value):
 
 
 def horloge(heure, minutes):
-    global default
     global TABLEAU_HORLOGE
 
     "Affichage de l'heure"
@@ -77,7 +78,9 @@ def horloge(heure, minutes):
     y = 0
     for i in range(0, 3):
         for j in range(3, 8):
-            TABLEAU_HORLOGE[i][j] = CHIFFRE[minute2][x][y]
+            pixel = CHIFFRE[minute2][x][y]
+            if pixel:
+                TABLEAU_HORLOGE[i][j] = COLOR_2
             y = y + 1
         x = x + 1
         y = 0
@@ -85,7 +88,9 @@ def horloge(heure, minutes):
     x = 0
     for i in range(4, 7):
         for j in range(3, 8):
-            TABLEAU_HORLOGE[i][j] = CHIFFRE[minute1][x][y]
+            pixel = CHIFFRE[minute1][x][y]
+            if pixel:
+                TABLEAU_HORLOGE[i][j] = COLOR_2
             y = y + 1
         x = x + 1
         y = 0
@@ -93,7 +98,9 @@ def horloge(heure, minutes):
     x = 0
     for i in range(1, 4):
         for j in range(0, 4):
-            TABLEAU_HORLOGE[i][j] = CHIFFRE[heure2][x][y]
+            pixel = CHIFFRE[heure2][x][y]
+            if pixel:
+                TABLEAU_HORLOGE[i][j] = COLOR_1
             y = y + 1
         x = x + 1
         y = 0
@@ -101,7 +108,9 @@ def horloge(heure, minutes):
     x = 0
     for i in range(5, 8):
         for j in range(0, 4):
-            TABLEAU_HORLOGE[i][j] = CHIFFRE[heure1][x][y]
+            pixel = CHIFFRE[heure1][x][y]
+            if pixel:
+                TABLEAU_HORLOGE[i][j] = COLOR_1
             y = y + 1
         x = x + 1
         y = 0
@@ -130,11 +139,10 @@ def tableauVersLEDS():
 
 def initTableauHorloge():
     global TABLEAU_HORLOGE
-    global default
 
     TABLEAU_HORLOGE = []
     for i in range(8):
-    	TABLEAU_HORLOGE.append([default[0],default[0],default[0],default[0],default[0],default[0],default[0],default[0]])
+    	TABLEAU_HORLOGE.append([pixel_off,pixel_off,pixel_off,pixel_off,pixel_off,pixel_off,pixel_off,pixel_off])
 
 def turnOffLeds():
     pixels.fill((0, 0, 0))
