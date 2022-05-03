@@ -82,6 +82,7 @@ def horloge(heure, minutes):
         x = x + 1
         y = 0
 
+    x = 0
     for i in range(4, 7):
         for j in range(3, 8):
             TABLEAU_HORLOGE[i][j] = CHIFFRE[minute1][x][y]
@@ -89,6 +90,7 @@ def horloge(heure, minutes):
         x = x + 1
         y = 0
 
+    x = 0
     for i in range(1, 4):
         for j in range(0, 4):
             TABLEAU_HORLOGE[i][j] = CHIFFRE[heure2][x][y]
@@ -96,6 +98,7 @@ def horloge(heure, minutes):
         x = x + 1
         y = 0
 
+    x = 0
     for i in range(5, 8):
         for j in range(0, 4):
             TABLEAU_HORLOGE[i][j] = CHIFFRE[heure1][x][y]
