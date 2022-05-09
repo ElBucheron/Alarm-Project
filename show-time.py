@@ -1,4 +1,5 @@
 # Simple test for NeoPixels on Raspberry Pi
+import sys
 import time
 import board
 import neopixel
@@ -73,6 +74,8 @@ def horloge(heure, minutes):
         minute2 = minutes
 
     #print("Heure:", afficheHeure)
+
+    initTableauHorloge()
 
     x = 0
     y = 0
@@ -165,7 +168,13 @@ if(__name__ == '__main__'):
 
         changeHeure = int
         changeMinute = int
-        while True:
+
+        heure = dt.datetime.now(tz).hour
+        minutes = dt.datetime.now(tz).minute
+        horloge(heure, minutes)
+        tableauVersLEDS()
+        
+        while(heure < int(sys.argv[1])):
 
             heure = dt.datetime.now(tz).hour
             minutes = dt.datetime.now(tz).minute
@@ -182,6 +191,9 @@ if(__name__ == '__main__'):
                 tableauVersLEDS()
 
             time.sleep(1)
+
+        turnOffLeds()
+        print("Fin du programme.")
 
     except KeyboardInterrupt:
         terminateProcess(0,0)
